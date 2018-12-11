@@ -16,20 +16,32 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author namileto
  */
-public class AccountController extends HttpServlet {
+public class SingleController extends HttpServlet {
 
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+        
+        String userPath = request.getServletPath();
+        
+        if (userPath.equals("/login"))
+        {
+            this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+        }
+        
     }
 
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        String userPath = request.getServletPath();
+        
+        if (userPath.equals("/login"))
+        {
+            //this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+        }
     }
 
     /**

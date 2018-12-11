@@ -18,12 +18,12 @@
             <h1 class="text-center">Login page</h1>
     </div>
         <% if (request.getAttribute("error") != null) {%>
-        error de connexion
+        erreur de connexion
         <% }%>
         
         <div class="container">
         <div class="col-sm-5 mx-auto jumbotron">
-        <form>
+        <form action="" method="post">
             <div class="form-group">
                 <label for="name">Username</label>
                 <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter username">
