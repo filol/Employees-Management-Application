@@ -40,7 +40,7 @@ public class SingleController extends HttpServlet {
         if (userPath.equals("/dashboard")) {
             if (userConnected(request))
             {
-                out.println("Dashboard page");
+                this.getServletContext().getRequestDispatcher("/dashboard.jsp").forward(request, response);
             }
             else {
                 out.println("You must be connected !");
@@ -61,6 +61,13 @@ public class SingleController extends HttpServlet {
             user.setUsername(request.getParameter("username"));
             user.setPassword(request.getParameter("password"));
             
+            if (user.getUsername() == null || user.getPassword()== null
+                    || user.getUsername().equals("") || user.getPassword().equals(""))
+            {
+                request.setAttribute("error-fields", "message without importance");
+                this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+            }
+            
             if (dt.checkCredentials(user.getUsername(), user.getPassword()))
             {
                 HttpSession s=request.getSession();
@@ -69,7 +76,7 @@ public class SingleController extends HttpServlet {
                 response.sendRedirect("/EmployeesManagementApplication/dashboard");
             }
             else {
-                request.setAttribute("error", "message without importance");
+                request.setAttribute("error-connection", "message without importance");
                 this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
             }
             

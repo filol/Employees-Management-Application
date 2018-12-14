@@ -21,9 +21,18 @@
         
         
         <div class="container">
-        <% if (request.getAttribute("error") != null) {%>
+        <% if (request.getAttribute("error-fields") != null) {%>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Fields error</strong> You must enter values in both fields.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <% }%>
+        
+        <% if (request.getAttribute("error-connection") != null) {%>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Connection error !</strong> You should check in on some of those fields below.
+                <strong>Connection error !</strong> Verifyyou login/password and try again.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

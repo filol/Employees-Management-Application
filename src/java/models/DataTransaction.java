@@ -29,6 +29,7 @@ public class DataTransaction {
     private String pwd;
 
     ArrayList<UserBean> userList;
+    ArrayList<EmployeeBean> employeeList;
 
     public Connection getConnection() {
         dbUrl = Constants.dbUrl;
@@ -79,18 +80,46 @@ public class DataTransaction {
         return userList;
     }
 
-    
-    
     public boolean checkCredentials(String login, String password) {
         String query = "SELECT * FROM USERS";
         userList = this.getAllCredentials(this.getResultSet(this.getStatement(this.getConnection()), query));
         for (UserBean user : userList) {
-            if (user.getUsername().equals(login) && user.getPassword().equals(password))
-            {
+            if (user.getUsername().equals(login) && user.getPassword().equals(password)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public ArrayList getAllEmployees(ResultSet rs) {
+        employeeList = new ArrayList<EmployeeBean>();
+        String query = "SELECT * FROM EMPLOYEES";
+        this.getResultSet(this.getStatement().getConnection(), query);
+        // FINIR ICI CONTINUER  !!!!
+        try {
+            while (rs.next()) {
+                EmployeeBean emp = new EmployeeBean();
+                emp.setFirstName(rs.getString("FIRSTNAME"));
+                emp.setName(rs.getString("NAME"));
+                emp.setHomePhone("TELHOME");
+                emp.setMobilePhone("TELMOB");
+                emp.setWorkingPhone("TELPRO");
+                emp.setAddress("ADRESS");
+                emp.setPostalCode("POSTALCODE");
+                emp.setCity("CITY");
+                emp.setEmail("EMAIL");
+                employeeList.add(emp);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return employeeList;
+    }
+    
+    public ArrayList getEmployees() {
+        String query = "SELECT * FROM EMPLOYEES";
+        employeeList = this.getAllEmployees(this.getResultSet(this.getStatement(this.getConnection()), query));
+        return employeeList;
     }
 
 }
