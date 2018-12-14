@@ -26,11 +26,11 @@
         <form action="" method="post">
             <div class="form-group">
                 <label for="name">Username</label>
-                <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter username">
+                <input name="username" type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter username">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password">
+                <input type="password" name="password" class="form-control" id="password" placeholder="Password">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
