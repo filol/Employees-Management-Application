@@ -17,11 +17,18 @@
     <div class="container">
             <h1 class="text-center">Login page</h1>
     </div>
-        <% if (request.getAttribute("error") != null) {%>
-        erreur de connexion
-        <% }%>
+        
+        
         
         <div class="container">
+        <% if (request.getAttribute("error") != null) {%>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Connection error !</strong> You should check in on some of those fields below.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <% }%>
         <div class="col-sm-5 mx-auto jumbotron">
         <form action="" method="post">
             <div class="form-group">

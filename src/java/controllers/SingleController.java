@@ -69,7 +69,8 @@ public class SingleController extends HttpServlet {
                 response.sendRedirect("/EmployeesManagementApplication/dashboard");
             }
             else {
-                out.println("connexion ERROR");
+                request.setAttribute("error", "message without importance");
+                this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
             }
             
             //this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
