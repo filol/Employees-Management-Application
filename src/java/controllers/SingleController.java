@@ -7,6 +7,7 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import models.DataTransaction;
+import models.EmployeeBean;
 import models.UserBean;
 
 /**
@@ -40,6 +42,10 @@ public class SingleController extends HttpServlet {
         if (userPath.equals("/dashboard")) {
             if (userConnected(request))
             {
+                DataTransaction dt = new DataTransaction();
+                ArrayList<EmployeeBean> employeesList = dt.getAllEmployees();
+                
+                request.setAttribute("employeesList", employeesList); 
                 this.getServletContext().getRequestDispatcher("/dashboard.jsp").forward(request, response);
             }
             else {

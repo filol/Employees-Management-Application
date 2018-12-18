@@ -4,7 +4,10 @@
     Author     : namileto
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="models.EmployeeBean"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,30 +25,41 @@
         <div class="container">
             <div class="container">
                 <div class="row font-weight-bold">
-                    <div class="col">Sél</div>
-                    <div class="col">Name</div>
-                    <div class="col">First Name</div>
-                    <div class="col">Home Phone</div>
-                    <div class="col">Mobile Phone</div>
-                    <div class="col">Work Phone</div>
+                    <div class="col-1">Sél</div>
+                    <div class="col-1">Name</div>
+                    <div class="col-1">First Name</div>
+                    <div class="col-1">Home Phone</div>
+                    <div class="col-1">Mobile Phone</div>
+                    <div class="col-1">Work Phone</div>
                     <div class="col-2">Address</div>
-                    <div class="col">Postal code</div>
-                    <div class="col">City</div>
+                    <div class="col-1">Postal code</div>
+                    <div class="col-1">City</div>
                     <div class="col-2">Email</div>
                 </div>
                 <br />
-                <div class="row top-buffer">
-                    <div class="col">Column</div>
-                    <div class="col">Column</div>
-                    <div class="col">Column</div>
-                    <div class="col">Column</div>
-                    <div class="col">Column</div>
-                    <div class="col">Column</div>
-                    <div class="col">Column</div>
-                    <div class="col">Column</div>
-                    <div class="col">Column</div>
-                    <div class="col">Column</div>
+
+
+                <%
+                    ArrayList<EmployeeBean> employeesList = (ArrayList<EmployeeBean>) request.getAttribute("employeesList");
+                    for (EmployeeBean employee : employeesList) {
+                %>
+                <div class="row">
+                    <div class="col-1">X</div>
+                    <div class="col-1"><% out.println(employee.getName());  %></div>
+                    <div class="col-1"><% out.println(employee.getFirstName());  %></div>
+                    <div class="col-1"><% out.println(employee.getHomePhone());  %></div>
+                    <div class="col-1"><% out.println(employee.getMobilePhone());  %></div>
+                    <div class="col-1"><% out.println(employee.getWorkingPhone());  %></div>
+                    <div class="col-2"><% out.println(employee.getAddress());  %></div>
+                    <div class="col-1"><% out.println(employee.getPostalCode());  %></div>
+                    <div class="col-1"><% out.println(employee.getCity());  %></div>
+                    <div class="col-2"><% out.println(employee.getEmail());  %></div>
                 </div>
+                <%}%>
+
+
+
+
             </div>
         </div>
     </body>

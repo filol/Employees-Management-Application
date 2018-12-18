@@ -91,23 +91,24 @@ public class DataTransaction {
         return false;
     }
 
-    public ArrayList getAllEmployees(ResultSet rs) {
+    public ArrayList getAllEmployees() {
         employeeList = new ArrayList<EmployeeBean>();
+        
         String query = "SELECT * FROM EMPLOYEES";
-        this.getResultSet(this.getStatement().getConnection(), query);
-        // FINIR ICI CONTINUER  !!!!
+        ResultSet rs = this.getResultSet(this.getStatement(this.getConnection()), query);
+  
         try {
             while (rs.next()) {
                 EmployeeBean emp = new EmployeeBean();
                 emp.setFirstName(rs.getString("FIRSTNAME"));
                 emp.setName(rs.getString("NAME"));
-                emp.setHomePhone("TELHOME");
-                emp.setMobilePhone("TELMOB");
-                emp.setWorkingPhone("TELPRO");
-                emp.setAddress("ADRESS");
-                emp.setPostalCode("POSTALCODE");
-                emp.setCity("CITY");
-                emp.setEmail("EMAIL");
+                emp.setHomePhone(rs.getString("TELHOME"));
+                emp.setMobilePhone(rs.getString("TELMOB"));
+                emp.setWorkingPhone(rs.getString("TELPRO"));
+                emp.setAddress(rs.getString("ADRESS"));
+                emp.setPostalCode(rs.getString("POSTALCODE"));
+                emp.setCity(rs.getString("CITY"));
+                emp.setEmail(rs.getString("EMAIL"));
                 employeeList.add(emp);
             }
         } catch (SQLException ex) {
@@ -115,11 +116,6 @@ public class DataTransaction {
         }
         return employeeList;
     }
-    
-    public ArrayList getEmployees() {
-        String query = "SELECT * FROM EMPLOYEES";
-        employeeList = this.getAllEmployees(this.getResultSet(this.getStatement(this.getConnection()), query));
-        return employeeList;
-    }
+
 
 }
