@@ -40,7 +40,7 @@ public class SingleController extends HttpServlet {
             this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }
         if (userPath.equals("/dashboard")) {
-            if (!userConnected(request)) // TO CHANGE FOR PROD !!!!!!!!!!
+            if (userConnected(request)) // TO CHANGE FOR PROD !!!!!!!!!!
             {
                 DataTransaction dt = new DataTransaction();
                 ArrayList<EmployeeBean> employeesList = dt.getAllEmployees();
@@ -90,6 +90,24 @@ public class SingleController extends HttpServlet {
             }
             
             //this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+        }
+        
+        
+        if (userPath.equals("/add")) {
+            PrintWriter out = response.getWriter();
+            DataTransaction dt = new DataTransaction();
+            EmployeeBean emp = new EmployeeBean();
+            emp.setName(request.getParameter("name"));
+            emp.setFirstName(request.getParameter("firstname"));
+            emp.setEmail(request.getParameter("email"));
+            emp.setHomePhone(request.getParameter("telhome"));
+            emp.setMobilePhone(request.getParameter("telmob"));
+            emp.setWorkingPhone(request.getParameter("telpro"));
+            emp.setAddress(request.getParameter("adress"));
+            emp.setCity(request.getParameter("city"));
+            emp.setPostalCode(request.getParameter("postalcode")); 
+            dt.addEmployee(emp);
+            out.println("update donne !");
         }
 
     }

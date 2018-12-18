@@ -147,7 +147,18 @@ public class EmployeeBean {
         this.email = email;
     }
 
-  
+    public String toString()
+    {
+        return this.firstName
+                + this.name + " | " 
+                + this.workingPhone + " | " 
+                + this.mobilePhone + " | " 
+                + this.homePhone+ " | " 
+                + this.address+ " | " 
+                + this.city+ " | " 
+                + this.postalCode+ " | " 
+                + this.email + " | " ;
+    }
     
     
 }

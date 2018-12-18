@@ -93,10 +93,10 @@ public class DataTransaction {
 
     public ArrayList getAllEmployees() {
         employeeList = new ArrayList<EmployeeBean>();
-        
+
         String query = "SELECT * FROM EMPLOYEES";
         ResultSet rs = this.getResultSet(this.getStatement(this.getConnection()), query);
-  
+
         try {
             while (rs.next()) {
                 EmployeeBean emp = new EmployeeBean();
@@ -117,5 +117,28 @@ public class DataTransaction {
         return employeeList;
     }
 
+    public void addEmployee(EmployeeBean emp)  {
+        
+        String query = "insert into EMPLOYEES (FIRSTNAME, NAME, TELHOME, TELMOB, TELPRO, ADRESS, POSTALCODE, CITY, EMAIL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        try {
+
+            dbConn = this.getConnection();
+            PreparedStatement st = dbConn.prepareStatement(query);
+            st.setString(1, emp.getFirstName());
+            st.setString(2, emp.getName());
+            st.setString(3, emp.getHomePhone());
+            st.setString(4, emp.getMobilePhone());
+            st.setString(5, emp.getWorkingPhone());
+            st.setString(6, emp.getAddress());
+            st.setString(7, emp.getPostalCode());
+            st.setString(8, emp.getCity());
+            st.setString(9, emp.getEmail());
+            st.executeUpdate();
+            dbConn.close();
+        } catch (SQLException ex) {System.out.println(ex.getMessage());}
+        
+       
+    }
 
 }

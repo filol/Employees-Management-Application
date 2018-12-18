@@ -38,13 +38,17 @@
                 </div>
                 <br />
 
-                <div class="listing" style="background-color: yellow; overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
+                <div class="listing" style=" overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
                     <%
                         ArrayList<EmployeeBean> employeesList = (ArrayList<EmployeeBean>) request.getAttribute("employeesList");
                         for (EmployeeBean employee : employeesList) {
                     %>
                     <div class="row">
-                        <div class="col-1">X</div>
+                        <div class="col-1">
+                            <div>
+                                <input type="radio" id="<% out.println(employee.getEmail());  %>" name="selection" >
+                            </div>
+                        </div>
                         <div class="col-1"><% out.println(employee.getName());  %></div>
                         <div class="col-1"><% out.println(employee.getFirstName());  %></div>
                         <div class="col-1"><% out.println(employee.getHomePhone());  %></div>
@@ -59,7 +63,7 @@
                 </div>
 
                 <div class="bottom-buttons" style="margin-top: 10px;">
-                    <button type="button" class="btn btn-primary">Add</button>
+                    <a href="add"><button type="button" class="btn btn-primary">Add</button></a>
                     <button type="button" class="btn btn-secondary">Details</button>
                     <button type="button" class="btn btn-danger">Delete</button> 
                 </div>
