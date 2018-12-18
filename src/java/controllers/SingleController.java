@@ -40,7 +40,7 @@ public class SingleController extends HttpServlet {
             this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }
         if (userPath.equals("/dashboard")) {
-            if (userConnected(request))
+            if (!userConnected(request)) // TO CHANGE FOR PROD !!!!!!!!!!
             {
                 DataTransaction dt = new DataTransaction();
                 ArrayList<EmployeeBean> employeesList = dt.getAllEmployees();
@@ -51,6 +51,9 @@ public class SingleController extends HttpServlet {
             else {
                 out.println("You must be connected !");
             }
+        }
+        if (userPath.equals("/add")) {
+            this.getServletContext().getRequestDispatcher("/add.jsp").forward(request, response);
         }
         
     }

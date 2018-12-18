@@ -20,6 +20,16 @@
     </servlet-mapping>
     
     
+    <servlet>
+        <servlet-name>add</servlet-name>
+        <servlet-class>controllers.SingleController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>add</servlet-name>
+        <url-pattern>/add</url-pattern>
+    </servlet-mapping>
+    
+    
     <!-- default welcome page -->
     <welcome-file-list>
         <!-- Here I put the value of the url-pattern without the /-->
