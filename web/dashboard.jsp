@@ -46,7 +46,7 @@
                     <div class="row">
                         <div class="col-1">
                             <div>
-                                <input type="radio" id="<% out.println(employee.getEmail());  %>" name="selection" >
+                                <input type="radio" id="<% out.println(employee.getEmail());  %>" name="selection" checked>
                             </div>
                         </div>
                         <div class="col-1"><% out.println(employee.getName());  %></div>
@@ -64,7 +64,7 @@
 
                 <div class="bottom-buttons" style="margin-top: 10px;">
                     <a href="add"><button type="button" class="btn btn-primary">Add</button></a>
-                    <button type="button" class="btn btn-secondary">Details</button>
+                    <a href="details"><button type="button" class="btn btn-secondary">Details</button></a>
                     <button type="button" class="btn btn-danger">Delete</button> 
                 </div>
             </div>

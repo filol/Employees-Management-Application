@@ -30,6 +30,16 @@
     </servlet-mapping>
     
     
+    <servlet>
+        <servlet-name>details</servlet-name>
+        <servlet-class>controllers.SingleController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>details</servlet-name>
+        <url-pattern>/details</url-pattern>
+    </servlet-mapping>
+    
+    
     <!-- default welcome page -->
     <welcome-file-list>
         <!-- Here I put the value of the url-pattern without the /-->
