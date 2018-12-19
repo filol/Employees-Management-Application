@@ -94,7 +94,7 @@
                     %>
                     <%                        if (employeesList.isEmpty()) {
                     %>
-                    The club ha no member ...
+                    The club has no member ...
                     <%
                     } else {
                     %>

@@ -33,7 +33,7 @@ public class SingleController extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         if (userPath.equals("")) {
-            out.println("edvrgr");
+            out.println("root path");
         }
 
         if (userPath.equals("/login")) {
@@ -44,10 +44,9 @@ public class SingleController extends HttpServlet {
             session.invalidate();
             response.sendRedirect("/EmployeesManagementApplication/login");
         }
-        
+
         if (userPath.equals("/dashboard")) {
-            if (userConnected(request)) 
-            {
+            if (userConnected(request)) {
                 DataTransaction dt = new DataTransaction();
                 ArrayList<EmployeeBean> employeesList = dt.getAllEmployees();
 
@@ -60,26 +59,33 @@ public class SingleController extends HttpServlet {
         if (userPath.equals("/add")) {
             this.getServletContext().getRequestDispatcher("/add.jsp").forward(request, response);
         }
-        
-        if (userPath.equals("/delete")) {      
-            String email = request.getParameter("email");
-             
-            DataTransaction dt = new DataTransaction();
-            dt.deleteEmployee(email);
-            
-            request.setAttribute("success-delete", "message without importance");
-            RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/dashboard");
-            rd.forward(request, response);
+
+        if (userPath.equals("/delete")) {
+            if (userConnected(request)) {
+                String email = request.getParameter("email");
+                DataTransaction dt = new DataTransaction();
+                dt.deleteEmployee(email);
+
+                request.setAttribute("success-delete", "message without importance");
+                RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/dashboard");
+                rd.forward(request, response);
+            } else {
+                out.println("You must be connected !");
+            }
         }
-        
+
         if (userPath.equals("/details")) {
-            String email = request.getParameter("email");
-            DataTransaction dt = new DataTransaction();
-            EmployeeBean emp = new EmployeeBean();
-            emp = dt.getEmployee(email);
-            request.setAttribute("currentEmployee", emp);
-            this.getServletContext().getRequestDispatcher("/details.jsp").forward(request, response);
-            
+            if (userConnected(request)) {
+                String email = request.getParameter("email");
+                DataTransaction dt = new DataTransaction();
+                EmployeeBean emp = new EmployeeBean();
+                emp = dt.getEmployee(email);
+                request.setAttribute("currentEmployee", emp);
+                this.getServletContext().getRequestDispatcher("/details.jsp").forward(request, response);
+            } else {
+                out.println("You must be connected !");
+            }
+
         }
 
     }
@@ -88,7 +94,6 @@ public class SingleController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-
         String userPath = request.getServletPath();
 
         if (userPath.equals("/login")) {
@@ -101,9 +106,7 @@ public class SingleController extends HttpServlet {
                     || user.getUsername().equals("") || user.getPassword().equals("")) {
                 request.setAttribute("error-fields", "message without importance");
                 this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-            }
-
-            else if (!dt.checkCredentials(user.getUsername(), user.getPassword())) {
+            } else if (!dt.checkCredentials(user.getUsername(), user.getPassword())) {
                 request.setAttribute("error-connection", "message without importance");
                 this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
             }
@@ -114,49 +117,34 @@ public class SingleController extends HttpServlet {
                 response.sendRedirect("/EmployeesManagementApplication/dashboard");
             }
 
-            
         }
 
         if (userPath.equals("/add")) {
-            DataTransaction dt = new DataTransaction();
-            EmployeeBean emp = new EmployeeBean();
-            emp.setName(request.getParameter("name"));
-            emp.setFirstName(request.getParameter("firstname"));
-            emp.setEmail(request.getParameter("email"));
-            emp.setHomePhone(request.getParameter("telhome"));
-            emp.setMobilePhone(request.getParameter("telmob"));
-            emp.setWorkingPhone(request.getParameter("telpro"));
-            emp.setAddress(request.getParameter("adress"));
-            emp.setCity(request.getParameter("city"));
-            emp.setPostalCode(request.getParameter("postalcode"));
-            dt.addEmployee(emp);
-            
-            request.setAttribute("success-added", "message without importance");
-            RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/dashboard");
-            rd.forward(request, response);
+            if (userConnected(request)) {
+                DataTransaction dt = new DataTransaction();
+                EmployeeBean emp = this.createEmployee(request);
+                dt.addEmployee(emp);
+                request.setAttribute("success-added", "message without importance");
+                RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/dashboard");
+                rd.forward(request, response);
+            } else {
+                out.println("You must be connected !");
+            }
         }
-        
-        
+
         if (userPath.equals("/details")) {
-            DataTransaction dt = new DataTransaction();
-            EmployeeBean emp = new EmployeeBean();
-            emp.setName(request.getParameter("name"));
-            emp.setFirstName(request.getParameter("firstname"));
-            emp.setEmail(request.getParameter("email"));
-            emp.setHomePhone(request.getParameter("telhome"));
-            emp.setMobilePhone(request.getParameter("telmob"));
-            emp.setWorkingPhone(request.getParameter("telpro"));
-            emp.setAddress(request.getParameter("adress"));
-            emp.setCity(request.getParameter("city"));
-            emp.setPostalCode(request.getParameter("postalcode"));
-            dt.updateEmployee(emp);
-            
-            request.setAttribute("success-updated", "message without importance");
-            RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/dashboard");
-            rd.forward(request, response);
+            if (userConnected(request)) {
+                DataTransaction dt = new DataTransaction();
+                EmployeeBean emp = this.createEmployee(request);
+                dt.updateEmployee(emp);
+
+                request.setAttribute("success-updated", "message without importance");
+                RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/dashboard");
+                rd.forward(request, response);
+            } else {
+                out.println("You must be connected !");
+            }
         }
-        
-        
 
         if (userPath.equals("/dashboard")) {
             if (userConnected(request)) {
@@ -190,8 +178,19 @@ public class SingleController extends HttpServlet {
             return false;
         }
     }
-    
-    
-   
+
+    public EmployeeBean createEmployee(HttpServletRequest request) {
+        EmployeeBean emp = new EmployeeBean();
+        emp.setName(request.getParameter("name"));
+        emp.setFirstName(request.getParameter("firstname"));
+        emp.setEmail(request.getParameter("email"));
+        emp.setHomePhone(request.getParameter("telhome"));
+        emp.setMobilePhone(request.getParameter("telmob"));
+        emp.setWorkingPhone(request.getParameter("telpro"));
+        emp.setAddress(request.getParameter("adress"));
+        emp.setCity(request.getParameter("city"));
+        emp.setPostalCode(request.getParameter("postalcode"));
+        return emp;
+    }
 
 }
