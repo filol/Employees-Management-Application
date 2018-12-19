@@ -29,6 +29,14 @@
         <url-pattern>/add</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>delete</servlet-name>
+        <servlet-class>controllers.SingleController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>delete</servlet-name>
+        <url-pattern>/delete</url-pattern>
+    </servlet-mapping>
     
     <servlet>
         <servlet-name>details</servlet-name>

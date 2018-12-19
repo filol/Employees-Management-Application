@@ -117,10 +117,10 @@ public class DataTransaction {
         return employeeList;
     }
 
-    public void addEmployee(EmployeeBean emp)  {
-        
+    public void addEmployee(EmployeeBean emp) {
+
         String query = "insert into EMPLOYEES (FIRSTNAME, NAME, TELHOME, TELMOB, TELPRO, ADRESS, POSTALCODE, CITY, EMAIL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
+
         try {
 
             dbConn = this.getConnection();
@@ -136,9 +136,77 @@ public class DataTransaction {
             st.setString(9, emp.getEmail());
             st.executeUpdate();
             dbConn.close();
-        } catch (SQLException ex) {System.out.println(ex.getMessage());}
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public EmployeeBean getEmployee(String email) {
+
+        String query = "SELECT * FROM EMPLOYEES WHERE EMAIL = ?";
+        EmployeeBean emp = new EmployeeBean();
         
-       
+        try {
+            dbConn = this.getConnection();
+            PreparedStatement st = dbConn.prepareStatement(query);
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+            emp.setFirstName(rs.getString("FIRSTNAME"));
+            emp.setName(rs.getString("NAME"));
+            emp.setHomePhone(rs.getString("TELHOME"));
+            emp.setMobilePhone(rs.getString("TELMOB"));
+            emp.setWorkingPhone(rs.getString("TELPRO"));
+            emp.setAddress(rs.getString("ADRESS"));
+            emp.setPostalCode(rs.getString("POSTALCODE"));
+            emp.setCity(rs.getString("CITY"));
+            emp.setEmail(rs.getString("EMAIL"));
+            }
+            dbConn.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return emp;
+    }
+
+    public void updateEmployee(EmployeeBean emp) {
+       String query = "UPDATE EMPLOYEES SET FIRSTNAME=?, NAME=?, TELHOME=?, TELMOB=?, "
+               + "TELPRO =?, ADRESS=?, POSTALCODE=?, CITY=? WHERE EMAIL=?";
+
+        try {
+
+            dbConn = this.getConnection();
+            PreparedStatement st = dbConn.prepareStatement(query);
+            st.setString(1, emp.getFirstName());
+            st.setString(2, emp.getName());
+            st.setString(3, emp.getHomePhone());
+            st.setString(4, emp.getMobilePhone());
+            st.setString(5, emp.getWorkingPhone());
+            st.setString(6, emp.getAddress());
+            st.setString(7, emp.getPostalCode());
+            st.setString(8, emp.getCity());
+            st.setString(9, emp.getEmail());
+            st.executeUpdate();
+            dbConn.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    
+    public void deleteEmployee(String email) {
+       String query = "DELETE FROM EMPLOYEES WHERE EMAIL=?";
+
+        try {
+
+            dbConn = this.getConnection();
+            PreparedStatement st = dbConn.prepareStatement(query);
+            st.setString(1, email);
+            st.executeUpdate();
+            dbConn.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
 }

@@ -15,18 +15,29 @@
         <%@include file="_bootstrapcss.jsp" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Dashboard</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".details-button").click(function () {
+                    var radioValue = $("input[name='email-selection']:checked").attr("id");
+                    ;
+                    window.location.href = "details?email=" + radioValue;
+                });
+            });
+            $(document).ready(function () {
+                $(".delete-button").click(function () {
+                    var radioValue = $("input[name='email-selection']:checked").attr("id");
+                    ;
+                    window.location.href = "delete?email=" + radioValue;
+                });
+            });
+        </script>
+
     </head>
     <body>
         <div class="container">
             <h1 class="text-center">Dashboard</h1>
-            <% if (request.getAttribute("success-added") != null) {%>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                Employee added to the database 
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <% }%>
+
             <br /><br />    
         </div>
 
@@ -46,7 +57,7 @@
                 </div>
                 <br />
 
-                <div class="listing" style=" overflow-y: scroll; overflow-x: hidden; max-height: 500px;">
+                <div class="listing" style=" overflow-y: scroll; overflow-x: hidden; max-height: 400px;">
                     <%
                         ArrayList<EmployeeBean> employeesList = (ArrayList<EmployeeBean>) request.getAttribute("employeesList");
                         for (EmployeeBean employee : employeesList) {
@@ -54,7 +65,7 @@
                     <div class="row">
                         <div class="col-1">
                             <div>
-                                <input type="radio" id="<% out.println(employee.getEmail());  %>" name="selection" checked>
+                                <input type="radio" id="<% out.println(employee.getEmail());  %>" name="email-selection" checked>
                             </div>
                         </div>
                         <div class="col-1"><% out.println(employee.getName());  %></div>
@@ -72,8 +83,38 @@
 
                 <div class="bottom-buttons" style="margin-top: 10px;">
                     <a href="add"><button type="button" class="btn btn-primary">Add</button></a>
-                    <a href="details"><button type="button" class="btn btn-secondary">Details</button></a>
-                    <button type="button" class="btn btn-danger">Delete</button> 
+                    <button type="button" class="btn btn-secondary details-button">Details</button>
+                    <button type="button" class="btn btn-danger delete-button">Delete</button> 
+                </div>
+
+                <div class="messages" style="margin-top: 20px;">
+                    <% if (request.getAttribute("success-added") != null) {%>
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                        Employee added to the database 
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <% }%>
+
+                    <% if (request.getAttribute("success-updated") != null) {%>
+                    <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+                        Employee has been updated
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <% }%>
+
+
+                    <% if (request.getAttribute("success-delete") != null) {%>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        Employee has been deleted !
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <% }%>
                 </div>
             </div>
         </div>

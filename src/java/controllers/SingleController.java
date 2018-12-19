@@ -40,7 +40,7 @@ public class SingleController extends HttpServlet {
             this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }
         if (userPath.equals("/dashboard")) {
-            if (userConnected(request)) // TO CHANGE FOR PROD !!!!!!!!!!
+            if (userConnected(request)) 
             {
                 DataTransaction dt = new DataTransaction();
                 ArrayList<EmployeeBean> employeesList = dt.getAllEmployees();
@@ -55,8 +55,25 @@ public class SingleController extends HttpServlet {
             this.getServletContext().getRequestDispatcher("/add.jsp").forward(request, response);
         }
         
+        if (userPath.equals("/delete")) {      
+            String email = request.getParameter("email");
+             
+            DataTransaction dt = new DataTransaction();
+            dt.deleteEmployee(email);
+            
+            request.setAttribute("success-delete", "message without importance");
+            RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/dashboard");
+            rd.forward(request, response);
+        }
+        
         if (userPath.equals("/details")) {
+            String email = request.getParameter("email");
+            DataTransaction dt = new DataTransaction();
+            EmployeeBean emp = new EmployeeBean();
+            emp = dt.getEmployee(email);
+            request.setAttribute("currentEmployee", emp);
             this.getServletContext().getRequestDispatcher("/details.jsp").forward(request, response);
+            
         }
 
     }
@@ -110,6 +127,28 @@ public class SingleController extends HttpServlet {
             RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/dashboard");
             rd.forward(request, response);
         }
+        
+        
+        if (userPath.equals("/details")) {
+            DataTransaction dt = new DataTransaction();
+            EmployeeBean emp = new EmployeeBean();
+            emp.setName(request.getParameter("name"));
+            emp.setFirstName(request.getParameter("firstname"));
+            emp.setEmail(request.getParameter("email"));
+            emp.setHomePhone(request.getParameter("telhome"));
+            emp.setMobilePhone(request.getParameter("telmob"));
+            emp.setWorkingPhone(request.getParameter("telpro"));
+            emp.setAddress(request.getParameter("adress"));
+            emp.setCity(request.getParameter("city"));
+            emp.setPostalCode(request.getParameter("postalcode"));
+            dt.updateEmployee(emp);
+            
+            request.setAttribute("success-updated", "message without importance");
+            RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/dashboard");
+            rd.forward(request, response);
+        }
+        
+        
 
         if (userPath.equals("/dashboard")) {
             if (userConnected(request)) {
@@ -143,5 +182,8 @@ public class SingleController extends HttpServlet {
             return false;
         }
     }
+    
+    
+   
 
 }
