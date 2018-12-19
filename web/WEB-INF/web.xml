@@ -39,6 +39,15 @@
     </servlet-mapping>
     
     <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>controllers.SingleController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
         <servlet-name>details</servlet-name>
         <servlet-class>controllers.SingleController</servlet-class>
     </servlet>

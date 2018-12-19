@@ -39,6 +39,12 @@ public class SingleController extends HttpServlet {
         if (userPath.equals("/login")) {
             this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }
+        if (userPath.equals("/logout")) {
+            HttpSession session = request.getSession();
+            session.invalidate();
+            response.sendRedirect("/EmployeesManagementApplication/login");
+        }
+        
         if (userPath.equals("/dashboard")) {
             if (userConnected(request)) 
             {

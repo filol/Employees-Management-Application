@@ -12,6 +12,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <%@include file="_bootstrapcss.jsp" %>
         <% EmployeeBean employee = (EmployeeBean)request.getAttribute("currentEmployee"); %>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".go-back").click(function () {
+                    parent.history.back();
+                });
+            });
+        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add page</title>
     </head>
@@ -73,6 +81,7 @@
             
             
             <button type="submit" class="btn btn-primary">Save</button>
+            <button  class="btn btn-light go-back">Cancel</button>
         </form>
         </div>
         </div>
