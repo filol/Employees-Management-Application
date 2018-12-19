@@ -97,16 +97,18 @@ public class SingleController extends HttpServlet {
                 this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
             }
 
+            else if (!dt.checkCredentials(user.getUsername(), user.getPassword())) {
+                request.setAttribute("error-connection", "message without importance");
+                this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+            }
             if (dt.checkCredentials(user.getUsername(), user.getPassword())) {
                 HttpSession s = request.getSession();
 
                 s.setAttribute("user", user);
                 response.sendRedirect("/EmployeesManagementApplication/dashboard");
-            } else {
-                request.setAttribute("error-connection", "message without importance");
             }
 
-            //this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+            
         }
 
         if (userPath.equals("/add")) {
