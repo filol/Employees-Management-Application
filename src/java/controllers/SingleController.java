@@ -28,14 +28,14 @@ public class SingleController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String userPath = request.getServletPath();
         PrintWriter out = response.getWriter();
-        
+
         if (userPath.equals("")) {
             out.println("edvrgr");
         }
-        
+
         if (userPath.equals("/login")) {
             this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }
@@ -44,11 +44,10 @@ public class SingleController extends HttpServlet {
             {
                 DataTransaction dt = new DataTransaction();
                 ArrayList<EmployeeBean> employeesList = dt.getAllEmployees();
-                
-                request.setAttribute("employeesList", employeesList); 
+
+                request.setAttribute("employeesList", employeesList);
                 this.getServletContext().getRequestDispatcher("/dashboard.jsp").forward(request, response);
-            }
-            else {
+            } else {
                 out.println("You must be connected !");
             }
         }
@@ -56,45 +55,44 @@ public class SingleController extends HttpServlet {
             this.getServletContext().getRequestDispatcher("/add.jsp").forward(request, response);
         }
         
+        if (userPath.equals("/details")) {
+            this.getServletContext().getRequestDispatcher("/details.jsp").forward(request, response);
+        }
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+
         String userPath = request.getServletPath();
 
         if (userPath.equals("/login")) {
-            PrintWriter out = response.getWriter();
             DataTransaction dt = new DataTransaction();
             UserBean user = new UserBean();
             user.setUsername(request.getParameter("username"));
             user.setPassword(request.getParameter("password"));
-            
-            if (user.getUsername() == null || user.getPassword()== null
-                    || user.getUsername().equals("") || user.getPassword().equals(""))
-            {
+
+            if (user.getUsername() == null || user.getPassword() == null
+                    || user.getUsername().equals("") || user.getPassword().equals("")) {
                 request.setAttribute("error-fields", "message without importance");
                 this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
             }
-            
-            if (dt.checkCredentials(user.getUsername(), user.getPassword()))
-            {
-                HttpSession s=request.getSession();
-                
+
+            if (dt.checkCredentials(user.getUsername(), user.getPassword())) {
+                HttpSession s = request.getSession();
+
                 s.setAttribute("user", user);
                 response.sendRedirect("/EmployeesManagementApplication/dashboard");
-            }
-            else {
+            } else {
                 request.setAttribute("error-connection", "message without importance");
-                this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
             }
-            
+
             //this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }
-        
-        
+
         if (userPath.equals("/add")) {
-            PrintWriter out = response.getWriter();
             DataTransaction dt = new DataTransaction();
             EmployeeBean emp = new EmployeeBean();
             emp.setName(request.getParameter("name"));
@@ -105,9 +103,24 @@ public class SingleController extends HttpServlet {
             emp.setWorkingPhone(request.getParameter("telpro"));
             emp.setAddress(request.getParameter("adress"));
             emp.setCity(request.getParameter("city"));
-            emp.setPostalCode(request.getParameter("postalcode")); 
+            emp.setPostalCode(request.getParameter("postalcode"));
             dt.addEmployee(emp);
-            out.println("update donne !");
+            
+            request.setAttribute("success-added", "message without importance");
+            RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/dashboard");
+            rd.forward(request, response);
+        }
+
+        if (userPath.equals("/dashboard")) {
+            if (userConnected(request)) {
+                DataTransaction dt = new DataTransaction();
+                ArrayList<EmployeeBean> employeesList = dt.getAllEmployees();
+
+                request.setAttribute("employeesList", employeesList);
+                this.getServletContext().getRequestDispatcher("/dashboard.jsp").forward(request, response);
+            } else {
+                out.println("You must be connected !");
+            }
         }
 
     }
@@ -121,15 +134,13 @@ public class SingleController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
-    
-    public boolean userConnected(HttpServletRequest request)
-    {
-        HttpSession session =request.getSession();
+
+    public boolean userConnected(HttpServletRequest request) {
+        HttpSession session = request.getSession();
         if (null != session.getAttribute("user")) {
-           return true;
+            return true;
         } else {
-            return false; 
+            return false;
         }
     }
 

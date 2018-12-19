@@ -19,6 +19,14 @@
     <body>
         <div class="container">
             <h1 class="text-center">Dashboard</h1>
+            <% if (request.getAttribute("success-added") != null) {%>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                Employee added to the database 
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <% }%>
             <br /><br />    
         </div>
 
