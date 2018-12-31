@@ -57,7 +57,11 @@ public class SingleController extends HttpServlet {
             }
         }
         if (userPath.equals("/add")) {
-            this.getServletContext().getRequestDispatcher("/add.jsp").forward(request, response);
+            if (userConnected(request)) {
+                this.getServletContext().getRequestDispatcher("/add.jsp").forward(request, response);
+            } else {
+                out.println("You must be connected !");
+            }
         }
 
         if (userPath.equals("/delete")) {
@@ -160,16 +164,15 @@ public class SingleController extends HttpServlet {
 
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
+    
+    
+    // HERE ARE SOME HELPERS METHODS
     public boolean userConnected(HttpServletRequest request) {
         HttpSession session = request.getSession();
         if (null != session.getAttribute("user")) {
