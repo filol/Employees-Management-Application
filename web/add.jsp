@@ -10,6 +10,7 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <%@include file="_bootstrapcss.jsp" %>
+        <%@include file="_topbar.jsp" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add page</title>
     </head>

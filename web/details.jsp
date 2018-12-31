@@ -11,6 +11,7 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <%@include file="_bootstrapcss.jsp" %>
+        <%@include file="_topbar.jsp" %>
         <% EmployeeBean employee = (EmployeeBean)request.getAttribute("currentEmployee"); %>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript">
