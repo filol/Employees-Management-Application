@@ -10,7 +10,10 @@ package models;
  * @author namileto
  */
 public class Constants {
+    
     public final static String dbUrl = "jdbc:derby://localhost:1527/PROJET";
     public final static String user = "adm";
-    public final static String pwd = "adm";  
+    public final static String pwd = "adm"; 
+    
+
 }
