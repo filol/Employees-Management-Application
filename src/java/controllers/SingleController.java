@@ -35,7 +35,7 @@ public class SingleController extends HttpServlet {
         if (userPath.equals("")) {
             out.println("root path");
         }
-
+        
         if (userPath.equals("/login")) {
             this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }
