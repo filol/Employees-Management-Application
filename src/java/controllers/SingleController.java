@@ -37,7 +37,7 @@ public class SingleController extends HttpServlet {
         }
         
         if (userPath.equals("/login")) {
-            this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+            this.getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
         }
         if (userPath.equals("/logout")) {
             HttpSession session = request.getSession();
@@ -51,14 +51,14 @@ public class SingleController extends HttpServlet {
                 ArrayList<EmployeeBean> employeesList = dt.getAllEmployees();
 
                 request.setAttribute("employeesList", employeesList);
-                this.getServletContext().getRequestDispatcher("/dashboard.jsp").forward(request, response);
+                this.getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp").forward(request, response);
             } else {
                 out.println("You must be connected !");
             }
         }
         if (userPath.equals("/add")) {
             if (userConnected(request)) {
-                this.getServletContext().getRequestDispatcher("/add.jsp").forward(request, response);
+                this.getServletContext().getRequestDispatcher("/WEB-INF/add.jsp").forward(request, response);
             } else {
                 out.println("You must be connected !");
             }
@@ -85,7 +85,7 @@ public class SingleController extends HttpServlet {
                 EmployeeBean emp = new EmployeeBean();
                 emp = dt.getEmployee(email);
                 request.setAttribute("currentEmployee", emp);
-                this.getServletContext().getRequestDispatcher("/details.jsp").forward(request, response);
+                this.getServletContext().getRequestDispatcher("/WEB-INF/details.jsp").forward(request, response);
             } else {
                 out.println("You must be connected !");
             }
@@ -109,10 +109,10 @@ public class SingleController extends HttpServlet {
             if (user.getUsername() == null || user.getPassword() == null
                     || user.getUsername().equals("") || user.getPassword().equals("")) {
                 request.setAttribute("error-fields", "message without importance");
-                this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+                this.getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             } else if (!dt.checkCredentials(user.getUsername(), user.getPassword())) {
                 request.setAttribute("error-connection", "message without importance");
-                this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+                this.getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             }
             if (dt.checkCredentials(user.getUsername(), user.getPassword())) {
                 HttpSession s = request.getSession();
@@ -156,7 +156,7 @@ public class SingleController extends HttpServlet {
                 ArrayList<EmployeeBean> employeesList = dt.getAllEmployees();
 
                 request.setAttribute("employeesList", employeesList);
-                this.getServletContext().getRequestDispatcher("/dashboard.jsp").forward(request, response);
+                this.getServletContext().getRequestDispatcher("/WEB-INF/dashboard.jsp").forward(request, response);
             } else {
                 out.println("You must be connected !");
             }
