@@ -13,7 +13,7 @@ An Employees Management Application (verison 1.0)
 
 ## 3) Run the application
 - Right click on the projet -> select properties and in the "run" section, make sure that "/EmployeesManagementApplication" is the context 
-path
+path (and not "/Employees-Management-Application" or you will get a 404)
 - Now you can run the application from Netbeans
 - the application shoud be available at "http://localhost:8080/EmployeesManagementApplication/"
 - Enjoy (the default crendentials are "admin" / "admin" for the login page) !
