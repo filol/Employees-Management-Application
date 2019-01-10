@@ -12,6 +12,8 @@ An Employees Management Application (verison 1.0)
 - In this database, execute the 2 SQL scripts located in "web/WEB-INF" (Employees.sql and Users.sql)
 
 ## 3) Run the application
+- Right click on the projet -> select properties and in the "run" section, make sure that "/EmployeesManagementApplication" is the context 
+path
 - Now you can run the application from Netbeans
 - the application shoud be available at "http://localhost:8080/EmployeesManagementApplication/"
 - Enjoy (the default crendentials are "admin" / "admin" for the login page) !
